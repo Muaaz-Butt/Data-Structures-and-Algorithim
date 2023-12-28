@@ -22,6 +22,7 @@ public:
 	bool isEmpty();
 	int getCapacity();
 	int getNumberOfElements();
+	void mergeTwoStacks(Stack<T>& s);
 };
 
 template <typename T>
@@ -139,13 +140,35 @@ Stack<T>::Stack(const Stack<T>& other)
 	}
 }
 
+template <typename T>
+void removeNegative(Stack<T>& s) {
+	int x = s.pop();
+	if (!s.isEmpty()) {
+		removeNegative(s);
+	}
+	if (x >= 0) {
+		s.push(x);
+	}
+}
+
+template <typename T>
+void Stack<T>::mergeTwoStacks(Stack<T>& s) {
+	if (s.isEmpty()) {
+		return;
+	}
+	push(s.pop());
+	mergeTwoStacks(s);
+
+}
+
 int main() {
-	Stack<int> s;
-	for (int i = 1; i <= 12; i++) {
-		s.push(i);
+	Stack<int> s1, s2;
+	s1.push(1);
+	s1.push(2);
+	s2.push(3);
+	s2.push(4);
+	s1.mergeTwoStacks(s2);
+	for (int i = 0; i < 4; i++) {
+		cout << s1.pop() << "\n";
 	}
-	while (!s.isEmpty()) {
-		cout << s.pop() << "\n";
-	}
-	return 0;
 }
